@@ -1,0 +1,30 @@
+Anomaly Detection Report
+========================
+
+Metrics
+-------
+Isolation Forest: precision=0.9100, recall=0.6067, f1=0.7280
+Autoencoder     : precision=1.0000, recall=0.6667, f1=0.8000
+
+Top 20 predicted anomalies (raw rows)
+----------------------------------------
+01. sender=112.0 receiver=1072.0 amount=0.948690 gas_fee=0.113834 timestamp=1707083856.0
+02. sender=348.0 receiver=348.0 amount=0.349934 gas_fee=0.032126 timestamp=1706783550.0
+03. sender=390.0 receiver=1064.0 amount=0.291273 gas_fee=0.000228 timestamp=1706737310.0
+04. sender=975.0 receiver=975.0 amount=0.244308 gas_fee=0.000318 timestamp=1703824976.0
+05. sender=124.0 receiver=1048.0 amount=0.400983 gas_fee=0.000490 timestamp=1703888543.0
+06. sender=136.0 receiver=136.0 amount=0.306308 gas_fee=0.000356 timestamp=1703905001.0
+07. sender=966.0 receiver=966.0 amount=0.343436 gas_fee=0.026355 timestamp=1703994874.0
+08. sender=605.0 receiver=605.0 amount=0.440527 gas_fee=0.000378 timestamp=1703638146.0
+09. sender=479.0 receiver=479.0 amount=0.290838 gas_fee=0.000227 timestamp=1703576665.0
+10. sender=900.0 receiver=900.0 amount=0.503049 gas_fee=0.000602 timestamp=1706907622.0
+11. sender=342.0 receiver=1121.0 amount=0.452644 gas_fee=0.000475 timestamp=1703633656.0
+12. sender=45.0 receiver=1130.0 amount=0.340155 gas_fee=0.000253 timestamp=1706675420.0
+13. sender=778.0 receiver=778.0 amount=0.535988 gas_fee=0.058270 timestamp=1703577785.0
+14. sender=868.0 receiver=1040.0 amount=0.419121 gas_fee=0.000395 timestamp=1706851993.0
+15. sender=504.0 receiver=504.0 amount=0.350908 gas_fee=0.032954 timestamp=1706870222.0
+16. sender=175.0 receiver=1159.0 amount=0.295537 gas_fee=0.000310 timestamp=1707153558.0
+17. sender=82.0 receiver=82.0 amount=0.266073 gas_fee=0.000228 timestamp=1706880313.0
+18. sender=400.0 receiver=1021.0 amount=0.337181 gas_fee=0.000391 timestamp=1703508534.0
+19. sender=408.0 receiver=1195.0 amount=0.268557 gas_fee=0.000309 timestamp=1706931117.0
+20. sender=715.0 receiver=715.0 amount=0.289568 gas_fee=0.034411 timestamp=1703991358.0
