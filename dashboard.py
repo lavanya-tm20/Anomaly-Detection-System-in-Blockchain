@@ -6,6 +6,9 @@ import streamlit as st
 import plotly.express as px
 from typing import Dict, Tuple
 
+# Import the workflow so we can generate data if missing
+from main import run_workflow
+
 CSV_PATH = os.path.join("outputs", "transactions_with_labels.csv")
 REPORT_PATH = os.path.join("outputs", "anomaly_report.txt")
 
@@ -78,7 +81,7 @@ def section_preview(df: pd.DataFrame) -> None:
 def section_metrics(metrics: Dict[str, Dict[str, float]]) -> None:
     st.markdown("### Model Metrics")
     if not metrics:
-        st.info("Metrics not found. Run `python main.py ...` to generate `outputs/anomaly_report.txt`.")
+        st.info("Metrics not found. Run the generator below to create data and metrics.")
         return
     cols = st.columns(2)
     for i, (name, m) in enumerate(metrics.items()):
@@ -128,11 +131,38 @@ def section_download(df: pd.DataFrame) -> None:
         mime="text/csv",
     )
 
+
+def section_generate_if_missing() -> None:
+    """UI to generate dataset if CSV is missing on the server."""
+    st.markdown("### Generate Sample Data (if missing)")
+    st.write(
+        "The CSV and metrics are created by the training pipeline. Click generate to create them now."
+    )
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        num_tx = st.number_input("num_tx", min_value=500, max_value=20000, value=5000, step=500)
+    with col2:
+        anomaly_ratio = st.slider("anomaly_ratio", min_value=0.005, max_value=0.1, value=0.03, step=0.005)
+    with col3:
+        random_state = st.number_input("random_state", min_value=0, max_value=10000, value=42, step=1)
+    if st.button("Generate dataset"):
+        # Run pipeline to create outputs including CSV and report
+        run_workflow(
+            num_tx=int(num_tx),
+            anomaly_ratio=float(anomaly_ratio),
+            random_state=int(random_state),
+            iso_contamination=float(anomaly_ratio),
+            ae_contamination=float(anomaly_ratio),
+        )
+        st.success("Dataset generated. Reloading...")
+        st.rerun()
+
 # ------------------------------
 # Main app logic
 # ------------------------------
 if not os.path.exists(CSV_PATH):
-    st.error(f"CSV not found at {CSV_PATH}. Run `python main.py` to generate it.")
+    st.error(f"CSV not found at {CSV_PATH}.")
+    section_generate_if_missing()
     st.stop()
 
 # Load
@@ -149,4 +179,4 @@ section_distribution(df_view)
 section_scatter(df_view)
 section_download(df_view)
 
-st.caption("Run: `python main.py --num_tx 5000 --anomaly_ratio 0.03 --random_state 42` then `python -m streamlit run dashboard.py`.")
+st.caption("If the CSV is missing, use the generator above or run locally: `python main.py --num_tx 5000 --anomaly_ratio 0.03 --random_state 42`. Then redeploy or refresh.")
